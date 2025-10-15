@@ -1,55 +1,181 @@
-# task-manager-api
+# 📋 Sua Lista de Afazeres
 
-# 📋 To-Do List – Site
+Uma aplicação moderna de lista de tarefas construída com React e Vite, que funciona completamente offline e salva seus dados localmente no navegador.
 
-📌 Sobre o projeto
-Este projeto foi desenvolvido como parte dos nossos estudos em desenvolvimento web.
-Consiste em uma lista de tarefas interativa, permitindo adicionar e remover tarefas, com uma interface simples feita em React e uma API em Node.js/Express para gerenciar os dados.
+![React](https://img.shields.io/badge/React-18.2.0-blue)
+![Vite](https://img.shields.io/badge/Vite-5.2.0-purple)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow)
+![CSS3](https://img.shields.io/badge/CSS3-Modern-green)
 
-O objetivo foi praticar conceitos de front-end e back-end, integrando uma API simples a uma interface web.
+## ✨ Funcionalidades
 
-# 🛠️ Tecnologias utilizadas
+- ➕ **Adicionar tarefas** - Crie novas tarefas facilmente
+- ✅ **Marcar como concluída** - Clique na tarefa para alternar o status
+- 🗑️ **Deletar tarefas** - Remova tarefas que não precisa mais
+- 💾 **Persistência local** - Suas tarefas são salvas automaticamente no navegador
+- 🌙 **Tema escuro** - Interface moderna e elegante
+- 📱 **Responsivo** - Funciona perfeitamente em desktop e mobile
+- 🚀 **Offline** - Funciona sem conexão com a internet
 
-HTML5 – Estrutura da página
+## 🚀 Como Usar
 
-CSS3 – Estilização e layout
+### Opção 1: Usar Online (Recomendado)
 
-JavaScript (ES6+) – Lógica do projeto
+1. Acesse o site: [Link do seu repositório GitHub Pages]
+2. Comece a usar imediatamente!
 
-React + Vite – Interface interativa
+### Opção 2: Executar Localmente
 
-Node.js + Express – API simples para gerenciar tarefas
+#### Pré-requisitos
+- [Node.js](https://nodejs.org/) (versão 16 ou superior)
+- [npm](https://www.npmjs.com/) (vem com o Node.js)
 
-# 🎯 Objetivos do projeto
+#### Instalação
 
-Criar uma lista de tarefas funcional e interativa
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
+   cd SEU-REPOSITORIO
+   ```
 
-Praticar integração entre front-end e back-end
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
 
-Exercitar o consumo de uma API com JavaScript
+3. **Execute o projeto**
+   ```bash
+   npm run dev
+   ```
 
-Reforçar conceitos de CRUD (Create, Read, Update, Delete)
+4. **Abra no navegador**
+   - Acesse `http://localhost:5173`
+   - O Vite abrirá automaticamente no seu navegador
 
-# 📌 Planejamento do Produto (Lean e Ágil)
+## 🎯 Como Usar a Aplicação
 
-O MVP do projeto será uma aplicação simples de lista de tarefas (To-Do List), com as seguintes funcionalidades mínimas:
+### Adicionar uma Tarefa
+1. Digite sua tarefa no campo de texto
+2. Clique em "Adicionar" ou pressione Enter
+3. Sua tarefa aparecerá na lista
 
-Criar uma nova tarefa
+### Marcar como Concluída
+1. Clique no texto da tarefa
+2. A tarefa será riscada e ficará acinzentada
+3. Clique novamente para desmarcar
 
-Visualizar todas as tarefas
+### Deletar uma Tarefa
+1. Clique no ícone de lixeira ao lado da tarefa
+2. A tarefa será removida permanentemente
 
-Atualizar uma tarefa existente
+### Persistência de Dados
+- Todas as suas tarefas são salvas automaticamente no navegador
+- Mesmo fechando o navegador, suas tarefas continuam lá
+- Os dados ficam salvos no seu computador (localStorage)
 
-Deletar uma tarefa
+## 🛠️ Tecnologias Utilizadas
 
-# 📌 Priorização Lean
+- **React 18** - Biblioteca para interfaces de usuário
+- **Vite** - Ferramenta de build rápida e moderna
+- **JavaScript ES6+** - Linguagem de programação moderna
+- **CSS3** - Estilização com design responsivo
+- **localStorage** - Armazenamento local no navegador
 
-Foco nas funcionalidades essenciais (CRUD).
+## 📁 Estrutura do Projeto
 
-Eliminação de “desperdícios” → nada de recursos extras no início (ex: login, categorias, filtros avançados).
+```
+to-do-list/
+├── index.html              # Página principal
+├── package.json            # Configurações e dependências
+├── vite.config.js          # Configuração do Vite
+├── README.md              # Este arquivo
+└── src/
+    ├── main.jsx           # Ponto de entrada da aplicação
+    ├── App.jsx            # Componente principal
+    ├── App.css            # Estilos globais
+    └── components/
+        ├── TaskForm.jsx   # Formulário para adicionar tarefas
+        └── TaskItem.jsx   # Componente de cada tarefa
+```
 
-Interações futuras podem expandir conforme necessidade.
+## 🎨 Personalização
 
-👩‍💻 Autor
-Desenvolvido por Ana Caroline Mendes Pires, Claudio Henrique e Kevin dos Santos como projeto de estudo.
-📅 Foco no aprimoramento de habilidades em desenvolvimento web.
+### Alterando Cores
+Edite o arquivo `src/App.css` para personalizar as cores:
+
+```css
+/* Cor principal (amarelo) */
+h1 { color: #ffce00; }
+.task-form button { background: #ffce00; }
+
+/* Cor de fundo */
+body { background-color: #121212; }
+.app-container { background: #1e1e1e; }
+```
+
+### Adicionando Novas Funcionalidades
+- **Filtros**: Adicione filtros para tarefas concluídas/pendentes
+- **Categorias**: Organize tarefas por categorias
+- **Data**: Adicione datas de vencimento
+- **Prioridades**: Sistema de prioridades (alta, média, baixa)
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Para contribuir:
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📝 Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev          # Inicia servidor de desenvolvimento
+
+# Produção
+npm run build        # Cria build de produção
+npm run preview      # Visualiza build de produção
+
+# Qualidade de código
+npm run lint         # Executa linter
+```
+
+## 🌐 Deploy
+
+### GitHub Pages
+1. Execute `npm run build`
+2. Configure GitHub Pages para servir a pasta `dist`
+3. Seu site estará disponível em `https://SEU-USUARIO.github.io/SEU-REPOSITORIO`
+
+### Netlify
+1. Conecte seu repositório GitHub ao Netlify
+2. Configure build command: `npm run build`
+3. Configure publish directory: `dist`
+
+### Vercel
+1. Instale Vercel CLI: `npm i -g vercel`
+2. Execute `vercel` na pasta do projeto
+3. Siga as instruções
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Seu Nome**
+- GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- Email: seu-email@exemplo.com
+
+## 🙏 Agradecimentos
+
+- [React](https://reactjs.org/) - Biblioteca incrível para interfaces
+- [Vite](https://vitejs.dev/) - Build tool super rápido
+- [MDN Web Docs](https://developer.mozilla.org/) - Documentação sempre útil
+
+---
+
+⭐ **Se este projeto te ajudou, considere dar uma estrela!** ⭐
