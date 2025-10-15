@@ -9,13 +9,27 @@ Uma aplicação moderna de lista de tarefas construída com React e Vite, que fu
 
 ## ✨ Funcionalidades
 
-- ➕ **Adicionar tarefas** - Crie novas tarefas facilmente
+### 🎯 Funcionalidades Principais
+- ➕ **Adicionar tarefas** - Crie novas tarefas com validação inteligente
 - ✅ **Marcar como concluída** - Clique na tarefa para alternar o status
-- 🗑️ **Deletar tarefas** - Remova tarefas que não precisa mais
+- ✏️ **Editar tarefas** - Edite tarefas diretamente na lista (clique no ícone de lápis)
+- 🗑️ **Deletar tarefas** - Remova tarefas com confirmação de segurança
+- 🔍 **Filtros avançados** - Visualize todas, pendentes ou concluídas
+- 📊 **Estatísticas em tempo real** - Acompanhe seu progresso
+- 🧹 **Limpar concluídas** - Remova todas as tarefas concluídas de uma vez
+
+### 🛡️ Validações e Segurança
+- ✅ **Validação de entrada** - Não permite tarefas vazias ou muito curtas
+- ⚠️ **Confirmações** - Confirma antes de deletar tarefas
+- 🎯 **Feedback visual** - Mensagens de erro claras e intuitivas
+
+### 💾 Persistência e Interface
 - 💾 **Persistência local** - Suas tarefas são salvas automaticamente no navegador
+- 📅 **Data de criação** - Cada tarefa mostra quando foi criada
 - 🌙 **Tema escuro** - Interface moderna e elegante
 - 📱 **Responsivo** - Funciona perfeitamente em desktop e mobile
 - 🚀 **Offline** - Funciona sem conexão com a internet
+- ⌨️ **Atalhos de teclado** - Enter para salvar, Escape para cancelar edição
 
 ## 🚀 Como Usar
 
@@ -54,24 +68,43 @@ Uma aplicação moderna de lista de tarefas construída com React e Vite, que fu
 
 ## 🎯 Como Usar a Aplicação
 
-### Adicionar uma Tarefa
-1. Digite sua tarefa no campo de texto
+### ➕ Adicionar uma Tarefa
+1. Digite sua tarefa no campo de texto (mínimo 3 caracteres)
 2. Clique em "Adicionar" ou pressione Enter
-3. Sua tarefa aparecerá na lista
+3. Sua tarefa aparecerá na lista com data de criação
 
-### Marcar como Concluída
+### ✅ Marcar como Concluída
 1. Clique no texto da tarefa
 2. A tarefa será riscada e ficará acinzentada
 3. Clique novamente para desmarcar
 
-### Deletar uma Tarefa
-1. Clique no ícone de lixeira ao lado da tarefa
-2. A tarefa será removida permanentemente
+### ✏️ Editar uma Tarefa
+1. Clique no ícone de lápis (✏️) ao lado da tarefa
+2. Digite o novo texto
+3. Pressione Enter para salvar ou Escape para cancelar
+4. Ou clique fora do campo para salvar
 
-### Persistência de Dados
+### 🗑️ Deletar uma Tarefa
+1. Clique no ícone de lixeira ao lado da tarefa
+2. Confirme a exclusão na caixa de diálogo
+3. A tarefa será removida permanentemente
+
+### 🔍 Filtrar Tarefas
+- **Todas**: Mostra todas as tarefas
+- **Pendentes**: Mostra apenas tarefas não concluídas
+- **Concluídas**: Mostra apenas tarefas concluídas
+- **Limpar Concluídas**: Remove todas as tarefas concluídas de uma vez
+
+### 📊 Acompanhar Progresso
+- Veja estatísticas em tempo real no topo da aplicação
+- Total de tarefas, pendentes e concluídas
+- Contadores nos filtros mostram quantidades
+
+### 💾 Persistência de Dados
 - Todas as suas tarefas são salvas automaticamente no navegador
 - Mesmo fechando o navegador, suas tarefas continuam lá
 - Os dados ficam salvos no seu computador (localStorage)
+- Cada tarefa mantém sua data de criação
 
 ## 🛠️ Tecnologias Utilizadas
 

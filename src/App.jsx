@@ -5,6 +5,7 @@ import "./App.css";
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState('all'); // 'all', 'completed', 'pending'
 
   // 🟢 Carrega tarefas salvas do localStorage
   useEffect(() => {
@@ -19,8 +20,16 @@ export default function App() {
 
   // ➕ Criar tarefa
   const addTask = (title) => {
-    if (!title.trim()) return;
-    const newTask = { id: Date.now(), title, completed: false };
+    if (!title || !title.trim()) {
+      alert("Por favor, digite uma tarefa válida!");
+      return;
+    }
+    const newTask = { 
+      id: Date.now(), 
+      title: title.trim(), 
+      completed: false,
+      createdAt: new Date().toISOString()
+    };
     setTasks([...tasks, newTask]);
   };
 
@@ -35,23 +44,109 @@ export default function App() {
 
   // ❌ Deletar tarefa
   const deleteTask = (id) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+    if (window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
+      setTasks(tasks.filter((t) => t.id !== id));
+    }
+  };
+
+  // ✏️ Editar tarefa
+  const editTask = (id, newTitle) => {
+    if (!newTitle || !newTitle.trim()) {
+      alert("Por favor, digite um título válido!");
+      return;
+    }
+    setTasks(
+      tasks.map((t) =>
+        t.id === id ? { ...t, title: newTitle.trim() } : t
+      )
+    );
+  };
+
+  // 📊 Estatísticas
+  const completedTasks = tasks.filter(t => t.completed).length;
+  const pendingTasks = tasks.filter(t => !t.completed).length;
+  const totalTasks = tasks.length;
+
+  // 🔍 Filtrar tarefas
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'completed') return task.completed;
+    if (filter === 'pending') return !task.completed;
+    return true;
+  });
+
+  // 🗑️ Limpar todas as tarefas concluídas
+  const clearCompleted = () => {
+    if (completedTasks > 0 && window.confirm(`Tem certeza que deseja deletar ${completedTasks} tarefa(s) concluída(s)?`)) {
+      setTasks(tasks.filter(t => !t.completed));
+    }
   };
 
   return (
     <div className="app-container">
       <h1>Sua Lista de Afazeres</h1>
+      
+      {/* Estatísticas */}
+      <div className="stats">
+        <div className="stat-item">
+          <span className="stat-number">{totalTasks}</span>
+          <span className="stat-label">Total</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-number">{pendingTasks}</span>
+          <span className="stat-label">Pendentes</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-number">{completedTasks}</span>
+          <span className="stat-label">Concluídas</span>
+        </div>
+      </div>
+
       <TaskForm onAdd={addTask} />
+
+      {/* Filtros */}
+      {totalTasks > 0 && (
+        <div className="filters">
+          <button 
+            className={filter === 'all' ? 'active' : ''} 
+            onClick={() => setFilter('all')}
+          >
+            Todas ({totalTasks})
+          </button>
+          <button 
+            className={filter === 'pending' ? 'active' : ''} 
+            onClick={() => setFilter('pending')}
+          >
+            Pendentes ({pendingTasks})
+          </button>
+          <button 
+            className={filter === 'completed' ? 'active' : ''} 
+            onClick={() => setFilter('completed')}
+          >
+            Concluídas ({completedTasks})
+          </button>
+          {completedTasks > 0 && (
+            <button className="clear-btn" onClick={clearCompleted}>
+              Limpar Concluídas
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="task-list">
-        {tasks.length === 0 ? (
-          <p className="empty">Nenhuma tarefa adicionada.</p>
+        {filteredTasks.length === 0 ? (
+          <p className="empty">
+            {filter === 'all' ? 'Nenhuma tarefa adicionada.' : 
+             filter === 'completed' ? 'Nenhuma tarefa concluída.' : 
+             'Nenhuma tarefa pendente.'}
+          </p>
         ) : (
-          tasks.map((t) => (
+          filteredTasks.map((t) => (
             <TaskItem
               key={t.id}
               task={t}
               onToggle={() => toggleTask(t.id)}
               onDelete={() => deleteTask(t.id)}
+              onEdit={editTask}
             />
           ))
         )}
