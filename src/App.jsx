@@ -8,39 +8,59 @@ export default function App() {
   const [filter, setFilter] = useState('all'); // 'all', 'completed', 'pending'
   const [confirmState, setConfirmState] = useState({ open: false, message: '', onConfirm: null });
 
-  // 🟢 Carrega tarefas salvas do localStorage
+  // 🟢 Carrega tarefas da API; se falhar, usa localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("tasks");
-    if (saved) setTasks(JSON.parse(saved));
+    (async () => {
+      try {
+        const res = await fetch('/api/tasks');
+        if (!res.ok) throw new Error('API offline');
+        const data = await res.json();
+        setTasks(data);
+      } catch {
+        const saved = localStorage.getItem('tasks');
+        if (saved) setTasks(JSON.parse(saved));
+      }
+    })();
   }, []);
 
-  // 🟡 Salva tarefas no localStorage sempre que mudar
+  // 🟡 Sincroniza com API e salva fallback no localStorage
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   // ➕ Criar tarefa
-  const addTask = (title) => {
+  const addTask = async (title) => {
     if (!title || !title.trim()) {
       alert("Por favor, digite uma tarefa válida!");
       return;
     }
-    const newTask = { 
-      id: Date.now(), 
-      title: title.trim(), 
-      completed: false,
-      createdAt: new Date().toISOString()
-    };
-    setTasks([...tasks, newTask]);
+    try {
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: title.trim(), completed: false, createdAt: new Date().toISOString() })
+      });
+      if (!res.ok) throw new Error();
+      const created = await res.json();
+      setTasks([...tasks, created]);
+    } catch {
+      const newTask = { id: Date.now(), title: title.trim(), completed: false, createdAt: new Date().toISOString() };
+      setTasks([...tasks, newTask]);
+    }
   };
 
   // ✅ Alternar tarefa concluída
-  const toggleTask = (id) => {
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-      )
-    );
+  const toggleTask = async (id) => {
+    const current = tasks.find(t => t.id === id);
+    const updated = { ...current, completed: !current.completed };
+    setTasks(tasks.map(t => t.id === id ? updated : t));
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed: updated.completed })
+      });
+    } catch {}
   };
 
   // ❌ Deletar tarefa
@@ -48,21 +68,27 @@ export default function App() {
     setConfirmState({
       open: true,
       message: "Tem certeza que deseja deletar esta tarefa?",
-      onConfirm: () => setTasks(tasks.filter((t) => t.id !== id))
+      onConfirm: async () => {
+        setTasks(tasks.filter((t) => t.id !== id));
+        try { await fetch(`/api/tasks/${id}`, { method: 'DELETE' }); } catch {}
+      }
     });
   };
 
   // ✏️ Editar tarefa
-  const editTask = (id, newTitle) => {
+  const editTask = async (id, newTitle) => {
     if (!newTitle || !newTitle.trim()) {
       alert("Por favor, digite um título válido!");
       return;
     }
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, title: newTitle.trim() } : t
-      )
-    );
+    setTasks(tasks.map((t) => t.id === id ? { ...t, title: newTitle.trim() } : t));
+    try {
+      await fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle.trim() })
+      });
+    } catch {}
   };
 
   // 📊 Estatísticas
@@ -83,7 +109,14 @@ export default function App() {
     setConfirmState({
       open: true,
       message: `Tem certeza que deseja deletar ${completedTasks} tarefa(s) concluída(s)?`,
-      onConfirm: () => setTasks(tasks.filter(t => !t.completed))
+      onConfirm: async () => {
+        const keep = tasks.filter(t => !t.completed);
+        const toDelete = tasks.filter(t => t.completed);
+        setTasks(keep);
+        try {
+          await Promise.all(toDelete.map(t => fetch(`/api/tasks/${t.id}`, { method: 'DELETE' })));
+        } catch {}
+      }
     });
   };
 
