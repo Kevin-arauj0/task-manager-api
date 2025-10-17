@@ -1,4 +1,6 @@
 import { useState } from "react";
+import editarIcon from "../../img/editar.png";
+import lixeiraIcon from "../../img/lixeira.png";
 
 export default function TaskItem({ task, onToggle, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -68,17 +70,17 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }) {
       <div className="task-actions">
         <button 
           onClick={handleEdit} 
-          className="edit-btn"
+          className="edit-btn icon-btn"
           title={isEditing ? "Salvar" : "Editar"}
         >
-          {isEditing ? "✓" : "✏️"}
+          {isEditing ? "✓" : <img src={editarIcon} alt="Editar" />}
         </button>
         <button 
           onClick={onDelete} 
-          className="delete-btn"
+          className="delete-btn icon-btn"
           title="Deletar tarefa"
         >
-          <span className="trash-icon"></span>
+          <img src={lixeiraIcon} alt="Excluir" />
         </button>
       </div>
     </div>
