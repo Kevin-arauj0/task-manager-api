@@ -3,7 +3,6 @@
 # 📋 To-Do List – Site
 
 📌 Sobre o projeto
-Este projeto foi desenvolvido como parte de meus estudos em desenvolvimento web.
 Este projeto foi desenvolvido como parte dos nossos estudos em desenvolvimento web.
 Consiste em uma lista de tarefas interativa, permitindo adicionar e remover tarefas, com uma interface simples feita em React e uma API em Node.js/Express para gerenciar os dados.
 
